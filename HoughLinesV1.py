@@ -81,6 +81,7 @@ def HL_Calvin(img, threshold=15):  # The image must be grayscale
 
 if __name__ == "__main__":
     img = cv2.imread("C:/Users/Calvin/find_lines/preprocessed_documents/L1-2010-1.tif", 0)
-    # line_detection_non_vectorized(img, img)
-    print(HL_Calvin(img, 500))
+    lines, img = HL_Calvin(img, 500)
+    cv2.imshow('Image with lines', img)
+    cv2.waitKey(0)
 
