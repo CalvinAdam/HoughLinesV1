@@ -1,7 +1,6 @@
 import cv2
 
-
-def HL_Calvin(img, threshold=15):  # The image must be grayscale
+def HL_Calvin(img, threshold=15, min_line_length=30):  # The image must be grayscale
     horizontal_his = [0 for _ in range(len(img))]
     vertical_his = [0 for _ in range(len(img[0]))]
     lines_dict = {}
@@ -10,9 +9,8 @@ def HL_Calvin(img, threshold=15):  # The image must be grayscale
     for linenumber, line in enumerate(img):  # Adds the black pixels to their
         # corresponding line and column buckets
         for pixelnumber, pixel in enumerate(line):
-            if pixel == 0:
-                horizontal_his[linenumber] += 1
-                vertical_his[pixelnumber] += 1
+            horizontal_his[linenumber] += not bool(pixel)
+            vertical_his[pixelnumber] += not bool(pixel)
     for his in [horizontal_his, vertical_his]:  # Combines lines
         for index, line in enumerate(his):
             if line == 0:
@@ -44,7 +42,7 @@ def HL_Calvin(img, threshold=15):  # The image must be grayscale
                 for lengthindex, length in enumerate(img_line[pixelindex:]):
                     if length == 255:
                         break
-                if lengthindex > 30:
+                if lengthindex > min_line_length:
                     line = [pixelindex, lineindex, pixelindex+lengthindex, lineindex]
                     lines.append(line)
                 if lengthindex > linevalue * 0.85:
@@ -62,7 +60,7 @@ def HL_Calvin(img, threshold=15):  # The image must be grayscale
                 for lengthindex, length in enumerate(img_column[pixelindex:]):
                     if length == 255:
                         break
-                if lengthindex > 30:
+                if lengthindex > min_line_length:
                     column = [columnindex, pixelindex, columnindex, pixelindex+lengthindex]
                     lines.append(column)
                 if lengthindex > columnvalue * 0.85:
@@ -80,8 +78,8 @@ def HL_Calvin(img, threshold=15):  # The image must be grayscale
 
 
 if __name__ == "__main__":
-    img = cv2.imread("C:/Users/Calvin/find_lines/preprocessed_documents/L1-2010-1.tif", 0)
+    img = cv2.imread("document", 0)
     lines, img = HL_Calvin(img, 500)
     cv2.imshow('Image with lines', img)
+    cv2.imwrite('linesdoc.jpg', img)
     cv2.waitKey(0)
-
