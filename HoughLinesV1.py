@@ -1,6 +1,6 @@
 import cv2
 
-def HL_Calvin(img, threshold=15, min_line_length=30):  # The image must be grayscale
+def HL_Calvin(img, threshold=15, min_line_length=30, max_line_skip=1):  # The image must be grayscale
     horizontal_his = [0 for _ in range(len(img))]
     vertical_his = [0 for _ in range(len(img[0]))]
     lines_dict = {}
