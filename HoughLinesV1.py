@@ -36,6 +36,7 @@ def HL_Calvin(img, threshold=15, min_line_length=30, max_line_skip=1):  # The im
     for lineindex, linevalue in lines_dict['horizontal'].items():
         img_line = img[lineindex]
         pixelindex = 0
+        current_line_value = linevalue
         while pixelindex < len(img_line):
             pixel = img_line[pixelindex]
             if pixel == 0:
@@ -60,6 +61,7 @@ def HL_Calvin(img, threshold=15, min_line_length=30, max_line_skip=1):  # The im
     for columnindex, columnvalue in lines_dict['vertical'].items():
         img_column = img[:, columnindex]
         pixelindex = 0
+        current_column_value = columnvalue
         while pixelindex < len(img_column):
             pixel = img_column[pixelindex]
             if pixel == 0:
