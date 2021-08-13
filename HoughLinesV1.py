@@ -75,7 +75,7 @@ def HL_Calvin(img, threshold=15, min_line_length=30, max_line_skip=1):  # The im
 
 
 if __name__ == "__main__":
-    img = cv2.imread("C:/Users/Calvin/find_lines/preprocessed_documents/L1-2010-1.tif", 0)
+    img = cv2.imread("document", 0)
     lines, img = HL_Calvin(img, threshold=50, max_line_skip=3)
     cv2.imshow('Image with lines', img)
     cv2.imwrite('linesdoc.jpg', img)
