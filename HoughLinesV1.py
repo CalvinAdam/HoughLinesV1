@@ -39,13 +39,19 @@ def HL_Calvin(img, threshold=15, min_line_length=30):  # The image must be grays
         while pixelindex < len(img_line):
             pixel = img_line[pixelindex]
             if pixel == 0:
+                line_skip = max_line_skip
                 for lengthindex, length in enumerate(img_line[pixelindex:]):
                     if length == 255:
-                        break
+                        line_skip -= 1
+                        if line_skip <= 0:
+                            break
+                    else:
+                        line_skip = max_line_skip
                 if lengthindex > min_line_length:
                     line = [pixelindex, lineindex, pixelindex+lengthindex, lineindex]
                     lines.append(line)
-                if lengthindex > linevalue * 0.85:
+                    current_line_value -= lengthindex
+                if current_line_value < min_line_length:
                     break
                 else:
                     pixelindex = pixelindex+lengthindex
@@ -57,13 +63,19 @@ def HL_Calvin(img, threshold=15, min_line_length=30):  # The image must be grays
         while pixelindex < len(img_column):
             pixel = img_column[pixelindex]
             if pixel == 0:
+                line_skip = max_line_skip
                 for lengthindex, length in enumerate(img_column[pixelindex:]):
                     if length == 255:
-                        break
+                        line_skip -= 1
+                        if line_skip <= 0:
+                            break
+                    else:
+                        line_skip = max_line_skip
                 if lengthindex > min_line_length:
                     column = [columnindex, pixelindex, columnindex, pixelindex+lengthindex]
                     lines.append(column)
-                if lengthindex > columnvalue * 0.85:
+                    current_column_value -= lengthindex
+                if current_column_value < min_line_length:
                     break
                 else:
                     pixelindex = pixelindex+lengthindex
